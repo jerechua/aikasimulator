@@ -204,7 +204,7 @@ class Skill extends React.Component {
 
   arrowComponent(className, modifier) {
     return React.createElement(
-        'div',
+        'button',
         {
           onClick: this.modifyCurrLevel(modifier),
           className: className,
@@ -223,7 +223,7 @@ class Skill extends React.Component {
 
   setCurrLevelComponent(className, level) {
     return React.createElement(
-        'div',
+        'button',
         {
           onClick: this.setCurrLevel(level),
           className: className,
