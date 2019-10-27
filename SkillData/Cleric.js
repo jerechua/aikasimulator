@@ -496,3 +496,7 @@ var Cleric = {
    ]
 
 };
+
+// TODO: Deal with this. We have to add this so we can import it as a module,
+// but it doesn't work in js. Maybe there's a way to shim this?
+export {Cleric};
