@@ -90,7 +90,8 @@ class App extends React.Component {
           React.createElement(Tier, {key: tier, tier: tier, skills: skills}));
     })
 
-    return React.createElement('div', null, tierComps);
+    const cols = React.createElement('div', {className: 'row'}, tierComps);
+    return React.createElement('div', {className: 'container'}, cols);
   }
 }
 
@@ -108,7 +109,15 @@ class Tier extends React.Component {
     this.props.skills.forEach(function(skill, index) {
       entries.push(React.createElement(Skill, {key: index, skill: skill}));
     });
-    return React.createElement('div', null, entries)
+
+    const tierElem = React.createElement(
+      'div',
+      {className: "tier col-5 bg-light"},
+      entries,
+    );
+    return tierElem;
+
+
   }
 }
 
@@ -121,11 +130,9 @@ class Skill extends React.Component {
 
   render() {
     return React.createElement(
-      'button',
-      // { onClick: () => this.setState({ liked: true }) },
-      null,
-
-      this.state.skill.name
+      'div',
+      {className: 'skill'},
+      this.state.skill.name,
     );
   }
 }
