@@ -4,7 +4,8 @@
 }
 
 .tier {
-  margin: 10px;
+  margin: 5px;
+  padding: 7px;
 }
 
 .downArrow{
@@ -49,4 +50,8 @@
 
 .skill-name{
   margin: 0 10px;
+}
+
+.skill-level{
+  margin: 10px;
 }

@@ -160,7 +160,7 @@ class Tier extends React.Component {
 
     return React.createElement(
         'div',
-        {className: "tier col bg-light"},
+        {className: "tier col bg-light border border-primary"},
         this.tierBanner(),
         entries,
     );
@@ -241,19 +241,27 @@ class Skill extends React.Component {
     )
   }
 
-  render() {
-    const levelElem = React.createElement('span', null, this.state.currLevel);
+  levelComponent() {
+    return React.createElement(
+        'span',
+        {
+            className: 'text-secondary skill-level float-right align-right',
+        },
+        this.state.currLevel + " / " + this.maxSkillLevel,
+    )
+  }
 
+  render() {
     return React.createElement(
         'div',
         {className: 'skill'},
         this.imageComponent(),
         this.nameComponent(),
-        levelElem,
         this.setCurrLevelComponent('dupArrow float-right', this.maxSkillLevel),
         this.arrowComponent('upArrow float-right', 1),
         this.arrowComponent('downArrow float-right', -1),
         this.setCurrLevelComponent('ddownArrow float-right', this.minSkillLevel),
+        this.levelComponent(),
     );
   }
 }
