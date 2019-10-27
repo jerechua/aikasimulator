@@ -17,17 +17,38 @@ class ClassSkills {
           rawData["skillLevel"][i],
        ));
     }
+    this.skillsByTier = this._allSkillsByTier(this.skills, 6);
+  }
 
+  _allSkillsByTier(skills, skillsPerTier) {
+    const skillsByTier = [];
+    var tier = [];
+    skills.forEach(function(val, index) {
+      tier.push(val);
+      if ((index % skillsPerTier) == (skillsPerTier - 1)) {
+        skillsByTier.push(tier);
+        tier = [];
+      }
+    });
+    if (tier.length > 0) {
+      skillsByTier.push(tier);
+    }
+    return skillsByTier;
+  }
+
+  getSkillsByTier(tier) {
+    // TODO: Add err handling?!
+    return this._allSkillsByTier[tier-1];
   }
 }
 
 // Holds information about a single skill, for all levels.
 class SkillDataSet {
   constructor(name, skillInfo, cd, mp, cast, level) {
+    this.name = name;
     this.dataPerLevel = []
     for (var i = 0; i < level.length; i++) {
       this.dataPerLevel.push(new SkillData(
-          name,
           skillInfo[i],
           cd[i],
           mp[i],
@@ -40,8 +61,7 @@ class SkillDataSet {
 
 // Holds information about a single skill for a given level.
 class SkillData {
-  constructor(name, skillInfo, cd, mp, cast, level) {
-    this.name = name;
+  constructor(skillInfo, cd, mp, cast, level) {
     this.skillInfo = skillInfo;
     this.cd = cd;
     this.mp = mp;
