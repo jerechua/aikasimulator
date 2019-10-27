@@ -1,6 +1,6 @@
 'use strict';
 
-import {Cleric} from '../SkillData/Cleric.js';
+import {Tier} from './Tier.js';
 
 // Holds information about a class and all of its skills.
 class ClassSkills {
@@ -91,79 +91,6 @@ class SkillData {
     this.mp = mp;
     this.cast = cast;
     this.level = level;
-  }
-}
-
-// Main application component.
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.data = {
-      cleric: new ClassSkills("Cleric", this.props.clericData),
-    };
-  }
-
-  render() {
-    const tierComps = [];
-    this.data.cleric.forEachTier(function(skills, tier) {
-      tierComps.push(
-          React.createElement(Tier, {key: tier, tier: tier, skills: skills}));
-
-      // Add some coloumn breaks every numCols tiers.
-      const numCols = 2;
-      if (((tier-1) % numCols) == (numCols - 1)) {
-        tierComps.push(React.createElement(
-            'div',
-            {
-              key: 'colbreak-' + tier,
-              className: 'w-100'
-            }
-        ));
-      }
-    })
-
-    const cols = React.createElement('div', {className: 'row'}, tierComps);
-    return React.createElement('div', {className: 'container main-container'}, cols);
-  }
-}
-
-// Component that displays a group of skills by tier.
-class Tier extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tier: this.props.tier,
-      skills: this.props.skills,
-    };
-  }
-
-  tierBanner() {
-    return React.createElement(
-        'p',
-        {className: 'text-center h3 text-primary'},
-        "Tier " + this.state.tier,
-    )
-  }
-
-  render() {
-    const entries = [];
-    this.props.skills.forEach(function(skill, index) {
-        entries.push(React.createElement(
-          Skill,
-          {
-               key: index,
-               skill: skill,
-               imageLocation: skill.gameClassName() + "/" + skill.id + ".jpg",
-          }
-        ));
-    });
-
-    return React.createElement(
-        'div',
-        {className: "tier col bg-light border border-primary"},
-        this.tierBanner(),
-        entries,
-    );
   }
 }
 
@@ -279,8 +206,4 @@ class Skill extends React.Component {
   }
 }
 
-const domContainer = document.querySelector('#root');
-ReactDOM.render(
-  React.createElement(App, {clericData: Cleric}),
-  domContainer
- );
+export {Skill, ClassSkills};
