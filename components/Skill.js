@@ -60,6 +60,18 @@ class SkillDataSet {
       ));
     }
   }
+
+  // The minimum level for this skill.
+  minLevel() {
+    // TODO: We need to make the lvl 1 skills always have 1 by default.
+    return 0;
+  }
+
+  // The maximum level for this skill.
+  maxLevel() {
+    return this.dataPerLevel.length;
+  }
+
 }
 
 // Holds information about a single skill for a given level.
@@ -126,16 +138,23 @@ class Skill extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // This SkillDataSet associated with this component.
       skill: this.props.skill,
-      currLevel: 0,
+      // The current level this skill is set to.
+      currLevel: this.props.skill.minLevel(),
     };
-    this.modifyUp = this.modifyUp.bind(this);
+
+    this.minSkillLevel = this.props.skill.minLevel();
+    this.maxSkillLevel = this.props.skill.maxLevel();
   }
 
   modifyUp(modifier) {
     var fn = function () {
+      var currLevel = this.state.currLevel + modifier;
+      currLevel = Math.max(this.minSkillLevel, currLevel);
+      currLevel = Math.min(this.maxSkillLevel, currLevel);
       this.setState(state => ({
-        currLevel: state.currLevel + modifier,
+        currLevel: currLevel,
       }));
     };
     fn = fn.bind(this);
