@@ -125,14 +125,42 @@ class Tier extends React.Component {
 class Skill extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { skill: this.props.skill };
+    this.state = {
+      skill: this.props.skill,
+      currLevel: 0,
+    };
+    this.modifyUp = this.modifyUp.bind(this);
+  }
+
+  modifyUp(modifier) {
+    var fn = function () {
+      this.setState(state => ({
+        currLevel: state.currLevel + modifier,
+      }));
+    };
+    fn = fn.bind(this);
+    return fn;
+  }
+
+  arrowComponent(className, modifier) {
+    return React.createElement(
+        'div',
+        {onClick: this.modifyUp(modifier), className: className},
+    )
   }
 
   render() {
+
+    const nameElem = React.createElement('span', null, this.state.skill.name);
+    const levelElem = React.createElement('span', null, this.state.currLevel);
+
     return React.createElement(
       'div',
       {className: 'skill'},
-      this.state.skill.name,
+      nameElem,
+      levelElem,
+      this.arrowComponent('upArrow', 1),
+      this.arrowComponent('downArrow', -1),
     );
   }
 }

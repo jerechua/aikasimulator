@@ -1,3 +1,43 @@
 .tier {
   margin: 10px;
 }
+
+.downArrow{
+    background:url("arrowdown.png");
+    background-size: 45px 45px;
+    cursor:pointer;
+    width: 45px;
+    height: 45px;
+    border: none;
+
+}
+
+.upArrow{
+    background:url("arrowup.png");
+    background-size: 45px 45px;
+    cursor:pointer;
+    width: 45px;
+    height: 45px;
+    border: none;
+
+}
+
+.ddownArrow{
+    background:url("darrowdown.png");
+    background-size: 45px 45px;
+    cursor:pointer;
+    width: 45px;
+    height: 45px;
+    border: none;
+
+}
+
+.dupArrow{
+    background:url("darrowup.png");
+    background-size: 45px 45px;
+    cursor:pointer;
+    width: 45px;
+    height: 45px;
+    border: none;
+
+}

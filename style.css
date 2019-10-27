@@ -6,9 +6,9 @@
     width: 45px;
     height: 45px;
     border: none;
-  
+
 }
-    
+
 .upArrow{
     background:url("arrowup.png");
     background-size: 45px 45px;
@@ -16,7 +16,7 @@
     width: 45px;
     height: 45px;
     border: none;
-  
+
 }
 
 .ddownArrow{
@@ -26,7 +26,7 @@
     width: 45px;
     height: 45px;
     border: none;
- 
+
 }
 
 .dupArrow{
@@ -39,13 +39,13 @@
 
 }
 
-.Menu { 
-    grid-area: menu; 
+.Menu {
+    grid-area: menu;
     border-radius: 50px 0px 0px 50px;
 }
 
-.top { 
-    grid-area: top; 
+.top {
+    grid-area: top;
     background-color: rgb(204, 220, 243);
     border-radius: 50px 50px 0px 0px;
 }
@@ -84,11 +84,11 @@
 }
 
 table {
-    
-    width: 100%; 
+
+    width: 100%;
     table-layout:fixed;
     border-radius: 25px;
-   
+
 }
 
 .colored {
@@ -113,15 +113,15 @@ table.fixed td { overflow: hidden; }
     border-radius:5px;
     text-align: left;
     word-wrap: break-word;
-    
-}      
+
+}
 
 .red{
     color: red;
 }
 
 .title{
-    font-size: 20px; 
+    font-size: 20px;
     color: grey;
     font-family:Courier New;
 }
@@ -157,6 +157,6 @@ table.fixed td { overflow: hidden; }
     height: 100px;
     border: none;
     margin: 5px;
-    
+
 }
 
