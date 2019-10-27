@@ -36,9 +36,11 @@ class ClassSkills {
     return skillsByTier;
   }
 
-  getSkillsByTier(tier) {
-    // TODO: Add err handling?!
-    return this._allSkillsByTier[tier-1];
+  forEachTier(cb) {
+    this.skillsByTier.forEach(function(tier, index) {
+      // index + 1 since we always start at 1.
+      cb(tier, index + 1);
+    })
   }
 }
 
@@ -49,6 +51,7 @@ class SkillDataSet {
     this.dataPerLevel = []
     for (var i = 0; i < level.length; i++) {
       this.dataPerLevel.push(new SkillData(
+          name,
           skillInfo[i],
           cd[i],
           mp[i],
@@ -61,7 +64,8 @@ class SkillDataSet {
 
 // Holds information about a single skill for a given level.
 class SkillData {
-  constructor(skillInfo, cd, mp, cast, level) {
+  constructor(name, skillInfo, cd, mp, cast, level) {
+    this.name = name;
     this.skillInfo = skillInfo;
     this.cd = cd;
     this.mp = mp;
@@ -80,7 +84,13 @@ class App extends React.Component {
     };
   }
   render() {
-    return React.createElement('div', null, React.createElement(Tier))
+    const tierComps = [];
+    this.data.cleric.forEachTier(function(skills, tier) {
+      tierComps.push(
+          React.createElement(Tier, {key: tier, tier: tier, skills: skills}));
+    })
+
+    return React.createElement('div', null, tierComps);
   }
 }
 
@@ -88,12 +98,16 @@ class App extends React.Component {
 class Tier extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {words: "false"}
+    this.state = {
+      tier: this.props.tier,
+      skills: this.props.skills,
+    };
   }
   render() {
     const entries = [];
-    entries.push(React.createElement(Skill, {key: '1', text: 'hi'}));
-    entries.push(React.createElement(Skill, {key: '2', text: 'hello'}));
+    this.props.skills.forEach(function(skill, index) {
+      entries.push(React.createElement(Skill, {key: index, skill: skill}));
+    });
     return React.createElement('div', null, entries)
   }
 }
@@ -102,7 +116,7 @@ class Tier extends React.Component {
 class Skill extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: this.props.text };
+    this.state = { skill: this.props.skill };
   }
 
   render() {
@@ -111,7 +125,7 @@ class Skill extends React.Component {
       // { onClick: () => this.setState({ liked: true }) },
       null,
 
-      this.state.text
+      this.state.skill.name
     );
   }
 }
