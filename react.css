@@ -55,3 +55,7 @@
 .skill-level{
   margin: 10px;
 }
+
+.classname-entry {
+  text-transform: capitalize;
+}

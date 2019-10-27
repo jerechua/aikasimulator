@@ -44,6 +44,10 @@ class ClassSkills {
       cb(tier, index + 1);
     })
   }
+
+  name() {
+    return this.className;
+  }
 }
 
 // Holds information about a single skill, for all levels.
