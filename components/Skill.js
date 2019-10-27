@@ -242,19 +242,32 @@ class Skill extends React.Component {
   }
 
   levelComponent() {
+    const classNames = [
+        'text-secondary',
+        'skill-level',
+        'float-right',
+        'align-right',
+    ];
+
     return React.createElement(
         'span',
         {
-            className: 'text-secondary skill-level float-right align-right',
+            className: classNames.join(' '),
         },
         this.state.currLevel + " / " + this.maxSkillLevel,
     )
   }
 
   render() {
+    const classNames = [
+      'skill',
+    ];
+    if (this.state.currLevel != this.minSkillLevel) {
+      classNames.push('font-weight-bold');
+    }
     return React.createElement(
         'div',
-        {className: 'skill'},
+        {className: classNames.join(' ')},
         this.imageComponent(),
         this.nameComponent(),
         this.setCurrLevelComponent('dupArrow float-right', this.maxSkillLevel),
