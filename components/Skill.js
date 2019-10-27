@@ -104,7 +104,6 @@ class App extends React.Component {
   }
 
   render() {
-
     const tierComps = [];
     this.data.cleric.forEachTier(function(skills, tier) {
       tierComps.push(
@@ -140,8 +139,8 @@ class Tier extends React.Component {
 
   tierBanner() {
     return React.createElement(
-        'h3',
-        {className: 'text-center'},
+        'p',
+        {className: 'text-center h3 text-primary'},
         "Tier " + this.state.tier,
     )
   }
@@ -214,16 +213,24 @@ class Skill extends React.Component {
     )
   }
 
-  render() {
+  nameComponent() {
+    return React.createElement(
+        'span',
+        {
+          className: 'text-secondary skill-name',
+        },
+        this.state.skill.name,
+    )
+  }
 
-    const nameElem = React.createElement('span', null, this.state.skill.name);
+  render() {
     const levelElem = React.createElement('span', null, this.state.currLevel);
 
     return React.createElement(
       'div',
       {className: 'skill'},
       this.imageComponent(),
-      nameElem,
+      this.nameComponent(),
       levelElem,
       this.arrowComponent('upArrow', 1),
       this.arrowComponent('downArrow', -1),
