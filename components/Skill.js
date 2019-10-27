@@ -9,6 +9,8 @@ class ClassSkills {
     this.skills = []
     for (var i = 0; i < rawData.skillDescription.length; i++) {
       this.skills.push(new SkillDataSet(
+          i + 1,
+          this.className,
           rawData["skillDescription"][i],
           rawData["skillInfo"][i],
           rawData["cd"][i],
@@ -46,7 +48,9 @@ class ClassSkills {
 
 // Holds information about a single skill, for all levels.
 class SkillDataSet {
-  constructor(name, skillInfo, cd, mp, cast, level) {
+  constructor(id, className, name, skillInfo, cd, mp, cast, level) {
+    this.id = id;
+    this.className = className;
     this.name = name;
     this.dataPerLevel = []
     for (var i = 0; i < level.length; i++) {
@@ -61,6 +65,11 @@ class SkillDataSet {
     }
   }
 
+  // The name of the in-game class this skill belongs to.
+  gameClassName() {
+    return this.className;
+  }
+
   // The minimum level for this skill.
   minLevel() {
     // TODO: We need to make the lvl 1 skills always have 1 by default.
@@ -71,7 +80,6 @@ class SkillDataSet {
   maxLevel() {
     return this.dataPerLevel.length;
   }
-
 }
 
 // Holds information about a single skill for a given level.
@@ -85,7 +93,6 @@ class SkillData {
     this.level = level;
   }
 }
-
 
 // Main application component.
 class App extends React.Component {
@@ -119,17 +126,20 @@ class Tier extends React.Component {
   render() {
     const entries = [];
     this.props.skills.forEach(function(skill, index) {
-      entries.push(React.createElement(Skill, {key: index, skill: skill}));
+        entries.push(React.createElement(
+          Skill,
+          {
+               key: index,
+               skill: skill,
+               imageLocation: skill.gameClassName() + "/" + skill.id + ".jpg",
+           }));
     });
 
-    const tierElem = React.createElement(
+    return React.createElement(
       'div',
       {className: "tier col-5 bg-light"},
       entries,
     );
-    return tierElem;
-
-
   }
 }
 
@@ -146,6 +156,13 @@ class Skill extends React.Component {
 
     this.minSkillLevel = this.props.skill.minLevel();
     this.maxSkillLevel = this.props.skill.maxLevel();
+
+    // The location in GameClassName/imageIndex.jpg
+    this.imageLocation = this.props.imageLocation;
+  }
+
+  imageComponent() {
+    return React.createElement('img',  {src: this.imageLocation});
   }
 
   modifyUp(modifier) {
@@ -176,6 +193,7 @@ class Skill extends React.Component {
     return React.createElement(
       'div',
       {className: 'skill'},
+      this.imageComponent(),
       nameElem,
       levelElem,
       this.arrowComponent('upArrow', 1),
