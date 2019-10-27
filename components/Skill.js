@@ -123,7 +123,7 @@ class App extends React.Component {
     })
 
     const cols = React.createElement('div', {className: 'row'}, tierComps);
-    return React.createElement('div', {className: 'container'}, cols);
+    return React.createElement('div', {className: 'container main-container'}, cols);
   }
 }
 
@@ -190,7 +190,7 @@ class Skill extends React.Component {
         'img', {src: this.imageLocation});
   }
 
-  modifyUp(modifier) {
+  modifyCurrLevel(modifier) {
     var fn = function () {
       var currLevel = this.state.currLevel + modifier;
       currLevel = Math.max(this.minSkillLevel, currLevel);
@@ -199,16 +199,34 @@ class Skill extends React.Component {
         currLevel: currLevel,
       }));
     };
-    fn = fn.bind(this);
-    return fn;
+    return fn.bind(this);
   }
 
   arrowComponent(className, modifier) {
     return React.createElement(
         'div',
         {
-          onClick: this.modifyUp(modifier),
-          className: className + " float-right",
+          onClick: this.modifyCurrLevel(modifier),
+          className: className,
+        },
+    )
+  }
+
+  setCurrLevel(level) {
+    var fn = function() {
+      this.setState(state => ({
+        currLevel: level,
+      }));
+    }
+    return fn.bind(this);
+  }
+
+  setCurrLevelComponent(className, level) {
+    return React.createElement(
+        'div',
+        {
+          onClick: this.setCurrLevel(level),
+          className: className,
         },
     )
   }
@@ -227,13 +245,15 @@ class Skill extends React.Component {
     const levelElem = React.createElement('span', null, this.state.currLevel);
 
     return React.createElement(
-      'div',
-      {className: 'skill'},
-      this.imageComponent(),
-      this.nameComponent(),
-      levelElem,
-      this.arrowComponent('upArrow', 1),
-      this.arrowComponent('downArrow', -1),
+        'div',
+        {className: 'skill'},
+        this.imageComponent(),
+        this.nameComponent(),
+        levelElem,
+        this.setCurrLevelComponent('dupArrow float-right', this.maxSkillLevel),
+        this.arrowComponent('upArrow float-right', 1),
+        this.arrowComponent('downArrow float-right', -1),
+        this.setCurrLevelComponent('ddownArrow float-right', this.minSkillLevel),
     );
   }
 }
