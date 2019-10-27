@@ -102,11 +102,25 @@ class App extends React.Component {
       cleric: new ClassSkills("Cleric", this.props.clericData),
     };
   }
+
   render() {
+
     const tierComps = [];
     this.data.cleric.forEachTier(function(skills, tier) {
       tierComps.push(
           React.createElement(Tier, {key: tier, tier: tier, skills: skills}));
+
+      // Add some coloumn breaks every numCols tiers.
+      const numCols = 2;
+      if (((tier-1) % numCols) == (numCols - 1)) {
+        tierComps.push(React.createElement(
+            'div',
+            {
+              key: 'colbreak-' + tier,
+              className: 'w-100'
+            }
+        ));
+      }
     })
 
     const cols = React.createElement('div', {className: 'row'}, tierComps);
@@ -123,6 +137,15 @@ class Tier extends React.Component {
       skills: this.props.skills,
     };
   }
+
+  tierBanner() {
+    return React.createElement(
+        'h3',
+        {className: 'text-center'},
+        "Tier " + this.state.tier,
+    )
+  }
+
   render() {
     const entries = [];
     this.props.skills.forEach(function(skill, index) {
@@ -132,13 +155,15 @@ class Tier extends React.Component {
                key: index,
                skill: skill,
                imageLocation: skill.gameClassName() + "/" + skill.id + ".jpg",
-           }));
+          }
+        ));
     });
 
     return React.createElement(
-      'div',
-      {className: "tier col-5 bg-light"},
-      entries,
+        'div',
+        {className: "tier col bg-light"},
+        this.tierBanner(),
+        entries,
     );
   }
 }
@@ -162,7 +187,8 @@ class Skill extends React.Component {
   }
 
   imageComponent() {
-    return React.createElement('img',  {src: this.imageLocation});
+    return React.createElement(
+        'img', {src: this.imageLocation});
   }
 
   modifyUp(modifier) {
@@ -181,7 +207,10 @@ class Skill extends React.Component {
   arrowComponent(className, modifier) {
     return React.createElement(
         'div',
-        {onClick: this.modifyUp(modifier), className: className},
+        {
+          onClick: this.modifyUp(modifier),
+          className: className + " float-right",
+        },
     )
   }
 
