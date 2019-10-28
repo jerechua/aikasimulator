@@ -89,6 +89,17 @@ class SkillDataSet {
   minCharacterLevel() {
     return this.dataPerLevel[0].level;
   }
+
+  // The maximum number of points that can be added to this skill for a given
+  // level.
+  maxPointsForLevel(level) {
+    for (var i = this.dataPerLevel.length - 1; i >= 0; i--) {
+      if (level > this.dataPerLevel[i].level) {
+        return i + 1;
+      }
+    }
+    return 0
+  }
 }
 
 // Holds information about a single skill for a given level.
@@ -117,7 +128,8 @@ class Skill extends React.Component {
     };
 
     this.minSkillLevel = this.props.skill.minLevel();
-    this.maxSkillLevel = this.props.skill.maxLevel();
+    this.maxSkillLevel = this.props.skill.maxPointsForLevel(
+        this.props.characterLevel);
   }
 
   shouldComponentUpdate(np, ns) {
@@ -130,7 +142,19 @@ class Skill extends React.Component {
         currLevel: np.skill.minLevel(),
         imageLocation: np.imageLocation,
       }));
+    } else if (np.characterLevel < this.props.characterLevel) {
+      // The current selected level changed, so just update the current
+      // level up to max allowable setting.
+      //
+      // The character level is going down, so we should figure out whether
+      // the skill is now set to the highest allowable setting. Otherwise, it
+      // goes up, so  it's fine to just do nothing.
+      this.setState({
+        currLevel: Math.min(
+            this.state.currLevel, this.props.skill.maxPointsForLevel(np.characterLevel)),
+      });
     }
+
     return true;
   }
 
@@ -208,11 +232,17 @@ class Skill extends React.Component {
   }
 
   render() {
+    this.minSkillLevel = this.props.skill.minLevel();
+    this.maxSkillLevel = this.props.skill.maxPointsForLevel(this.props.characterLevel);
+
     const classNames = [
       'skill',
     ];
     if (this.state.currLevel != this.minSkillLevel) {
       classNames.push('font-weight-bold');
+    }
+    if (this.props.characterLevel < this.state.skill.minCharacterLevel()) {
+      classNames.push('disabled-skill');
     }
     return React.createElement(
         'div',

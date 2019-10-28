@@ -14,6 +14,7 @@ class App extends React.Component {
       // This name should match an entry in data so we can access it using this
       // name as key (or just toLowerCase()).
       className: 'cleric',
+      characterLevel: 50,
     };
     this.data = {
       cleric: new ClassSkills("Cleric", this.props.clericData),
@@ -35,6 +36,7 @@ class App extends React.Component {
                 tier: tier,
                 skills: skills,
                 className: this.state.className,
+                characterLevel: this.state.characterLevel,
               },
           ));
 
@@ -62,6 +64,12 @@ class App extends React.Component {
     }));
   }
 
+  _updateCharacterLevel(level) {
+    this.setState({
+      characterLevel: parseInt(level),
+    });
+  }
+
   fetchClasses() {
     var nameMap = {}
     for (var k in this.data) {
@@ -76,8 +84,10 @@ class App extends React.Component {
       {className: 'container main-container'},
       React.createElement(Settings, {
         currentSelectedClass: this.state.className,
+        currentSelectedLevel: this.state.characterLevel,
         classMap: this.fetchClasses(),
         updateGameClassName: this._updateGameClassName,
+        updateCharacterLevel: this._updateCharacterLevel.bind(this),
       }),
       this.tierComponent());
   }

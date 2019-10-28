@@ -6,9 +6,6 @@ import {Skill} from './Skill.js';
 class Tier extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      className: this.props.className,
-    };
   }
 
   tierBanner() {
@@ -28,9 +25,10 @@ class Tier extends React.Component {
                key: index,
                skill: skill,
                imageLocation: skill.gameClassName() + "/" + skill.id + ".jpg",
+               characterLevel: this.props.characterLevel,
           }
         ));
-    });
+    }.bind(this));
 
     return React.createElement(
         'div',

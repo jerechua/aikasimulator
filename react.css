@@ -63,3 +63,18 @@
 .level-selector {
   width: 70px;
 }
+
+.disabled-skill {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+select {
+  text-align: center;
+  text-align-last: center;
+  /* webkit*/
+}
+option {
+  text-align: left;
+  /* reset to left*/
+}

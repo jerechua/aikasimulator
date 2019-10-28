@@ -6,11 +6,12 @@ class Settings extends React.Component {
 
     this.state = {
       currentSelectedClass: this.props.currentSelectedClass,
-      currentSelectedLevel: 50,
+      currentSelectedLevel: this.props.currentSelectedLevel,
     }
 
     this.classMap = this.props.classMap;
     this.updateGameClassName = this.props.updateGameClassName;
+    this.updateCharacterLevel = this.props.updateCharacterLevel;
 
     this.displayNames = [];
     for (var k in this.classMap) {
@@ -89,6 +90,7 @@ class Settings extends React.Component {
 
   levelSelectorOnChange(evt) {
     this.setState({currentSelectedLevel: evt.target.value});
+    this.updateCharacterLevel(evt.target.value);
   }
 
   // TODO: Level selector should be its own components.
