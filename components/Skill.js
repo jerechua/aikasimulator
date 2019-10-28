@@ -208,7 +208,7 @@ class Skill extends React.Component {
     return React.createElement(
         'span',
         {
-          className: 'text-secondary skill-name',
+          className: 'skill-name',
         },
         this.state.skill.name,
     )
@@ -216,7 +216,6 @@ class Skill extends React.Component {
 
   levelComponent() {
     const classNames = [
-        'text-secondary',
         'skill-level',
         'float-right',
         'align-right',
@@ -243,6 +242,9 @@ class Skill extends React.Component {
     }
     if (this.props.characterLevel < this.state.skill.minCharacterLevel()) {
       classNames.push('disabled-skill');
+    }
+    if (this.state.currLevel != 0 && this.state.currLevel == this.maxSkillLevel) {
+      classNames.push('bg-success text-white');
     }
     return React.createElement(
         'div',
