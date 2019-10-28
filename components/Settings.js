@@ -132,19 +132,27 @@ class Settings extends React.Component {
   }
 
   pointsRemainingElement() {
+
+    const remainingPointsClass = ['input-group-text'];
+    const actualPointsClass = ['form-control'];
+
+    if (this.props.remainingPoints == 0) {
+      remainingPointsClass.push('bg-danger', 'text-white');
+      actualPointsClass.push('font-weight-bold');
+    }
+
     const label = React.createElement(
         'div',
         {className: 'input-group-prepend'},
         React.createElement(
           'label',
-          {className: 'input-group-text'},
+          {className: remainingPointsClass.join(' ')},
           'Remaining Points'
         ),
         React.createElement(
             'span',
             {
-              className: 'form-control',
-              id: 'level-selector',
+              className: actualPointsClass.join(' '),
 
             },
             this.props.remainingPoints,
