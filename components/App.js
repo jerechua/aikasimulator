@@ -15,7 +15,12 @@ class App extends React.Component {
       // name as key (or just toLowerCase()).
       className: 'cleric',
       characterLevel: 50,
+      totalPoints: this._calculatePoints(50),
+      // We always use 1, but this is updated by itself anyway. It's just being
+      // set for correctness.
+      globalUsedPoints: 1,
     };
+
     this.data = {
       cleric: new ClassSkills("Cleric", this.props.clericData),
       rifleman: new ClassSkills("Rifleman", this.props.riflemanData),
@@ -23,6 +28,17 @@ class App extends React.Component {
 
     // make sure we bind this since we're calling it at a later time.
     this._updateGameClassName = this._updateGameClassName.bind(this);
+  }
+
+  _calculatePoints(level) {
+    level = parseInt(level);
+    return level + Math.max(level - 50, 0);
+  }
+
+  _updateGlobalUsedPoints(points) {
+    this.setState({
+      globalUsedPoints: this.state.globalUsedPoints + points,
+    })
   }
 
   tierComponent() {
@@ -37,6 +53,7 @@ class App extends React.Component {
                 skills: skills,
                 className: this.state.className,
                 characterLevel: this.state.characterLevel,
+                updateGlobalUsedPoints: this._updateGlobalUsedPoints.bind(this),
               },
           ));
 
@@ -61,12 +78,14 @@ class App extends React.Component {
       // Make sure we always use lowercase as the key for classes to match
       // this.data.
       className: className.toLowerCase(),
+      totalPoints: this._calculatePoints(this.state.characterLevel),
     }));
   }
 
   _updateCharacterLevel(level) {
     this.setState({
       characterLevel: parseInt(level),
+      totalPoints: this._calculatePoints(level),
     });
   }
 
@@ -88,6 +107,7 @@ class App extends React.Component {
         classMap: this.fetchClasses(),
         updateGameClassName: this._updateGameClassName,
         updateCharacterLevel: this._updateCharacterLevel.bind(this),
+        globalUsedPoints: this.state.totalPoints-this.state.globalUsedPoints,
       }),
       this.tierComponent());
   }

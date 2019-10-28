@@ -19,7 +19,6 @@ class Settings extends React.Component {
     }
     this.displayNames.sort();
 
-
     this.dropdownEntry = this.dropdownEntry.bind(this);
     this.levelSelectorOnChange = this.levelSelectorOnChange.bind(this);
   }
@@ -116,7 +115,7 @@ class Settings extends React.Component {
         React.createElement(
             'select',
             {
-              className: 'custom-select level-selector',
+              className: 'custom-select',
               id: 'level-selector',
               onChange: this.levelSelectorOnChange,
               value: this.state.currentSelectedLevel,
@@ -127,9 +126,35 @@ class Settings extends React.Component {
 
     return React.createElement(
         'div',
-        {className: 'input-group mb-3 float-left col-3'},
+        {className: 'input-group mb-3 float-left col-2'},
         levelSelector,
      );
+  }
+
+  pointsRemainingElement() {
+    const label = React.createElement(
+        'div',
+        {className: 'input-group-prepend'},
+        React.createElement(
+          'label',
+          {className: 'input-group-text'},
+          'Remaining Points'
+        ),
+        React.createElement(
+            'span',
+            {
+              className: 'form-control',
+              id: 'level-selector',
+
+            },
+            this.props.globalUsedPoints,
+        )
+    );
+    return React.createElement(
+        'div',
+        {className: 'input-group mb-3 float-left col-2'},
+        label,
+    )
   }
 
   render() {
@@ -140,6 +165,7 @@ class Settings extends React.Component {
         },
         this.classSelectorElement(),
         this.levelSelectorElement(),
+        this.pointsRemainingElement(),
     )
     return React.createElement(
         'div',

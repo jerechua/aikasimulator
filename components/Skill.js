@@ -137,6 +137,10 @@ class Skill extends React.Component {
   }
 
   shouldComponentUpdate(np, ns) {
+    if (ns.currLevel != this.state.currLevel) {
+      this.props.updateGlobalUsedPoints(ns.currLevel-this.state.currLevel);
+    }
+
     // Use image location as the determining factor when a component needs to
     // rerender since it's unique to the skill.
     if (np.imageLocation != this.state.imageLocation) {
