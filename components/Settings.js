@@ -6,6 +6,7 @@ class Settings extends React.Component {
 
     this.state = {
       currentSelectedClass: this.props.currentSelectedClass,
+      currentSelectedLevel: 50,
     }
 
     this.classMap = this.props.classMap;
@@ -19,6 +20,7 @@ class Settings extends React.Component {
 
 
     this.dropdownEntry = this.dropdownEntry.bind(this);
+    this.levelSelectorOnChange = this.levelSelectorOnChange.bind(this);
   }
 
   // TODO: Dropdown should be its own class.
@@ -85,15 +87,15 @@ class Settings extends React.Component {
     );
   }
 
+  levelSelectorOnChange(evt) {
+    this.setState({currentSelectedLevel: evt.target.value});
+  }
+
   // TODO: Level selector should be its own components.
   levelSelectorElement() {
     const levels = [];
     for (var i = 1; i <= 99; i++) {
-      var opts = {value: i};
-      // Set the default level to 50.
-      if (i == 50) {
-        opts.selected = 'selected';
-      }
+      var opts = {key: i, value: i};
       levels.push(React.createElement(
           'option',
           opts,
@@ -106,12 +108,17 @@ class Settings extends React.Component {
         {className: 'input-group-prepend'},
         React.createElement(
           'label',
-          {className: 'input-group-text', for:'level-selector'},
+          {className: 'input-group-text'},
           'Level'
         ),
         React.createElement(
             'select',
-            {className: 'custom-select level-selector', id: 'level-selector'},
+            {
+              className: 'custom-select level-selector',
+              id: 'level-selector',
+              onChange: this.levelSelectorOnChange,
+              value: this.state.currentSelectedLevel,
+            },
             levels,
         )
     );

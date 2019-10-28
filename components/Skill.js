@@ -84,6 +84,11 @@ class SkillDataSet {
   maxLevel() {
     return this.dataPerLevel.length;
   }
+
+  // The level at which the character needs to be in order to apply this skill.
+  minCharacterLevel() {
+    return this.dataPerLevel[0].level;
+  }
 }
 
 // Holds information about a single skill for a given level.
