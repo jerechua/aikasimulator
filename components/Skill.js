@@ -154,12 +154,12 @@ class Skill extends React.Component {
       // The current selected level changed, so just update the current
       // level up to max allowable setting.
       //
-      // The character level is going down, so we should figure out whether
-      // the skill is now set to the highest allowable setting. Otherwise, it
-      // goes up, so  it's fine to just do nothing.
+      // The character level is going down, so we just set skill back to min
+      // since there might not be enough points to do everything.
+      //
+      // TODO: Maybe this can be revisted to be smarter.
       this.setState({
-        currLevel: Math.min(
-            this.state.currLevel, this.props.skill.maxPointsForLevel(np.characterLevel)),
+        currLevel: np.skill.minLevel(),
       });
     }
 
