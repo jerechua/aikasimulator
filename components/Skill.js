@@ -107,18 +107,31 @@ class Skill extends React.Component {
       skill: this.props.skill,
       // The current level this skill is set to.
       currLevel: this.props.skill.minLevel(),
+      // The location in GameClassName/imageIndex.jpg
+      imageLocation: this.props.imageLocation,
     };
 
     this.minSkillLevel = this.props.skill.minLevel();
     this.maxSkillLevel = this.props.skill.maxLevel();
+  }
 
-    // The location in GameClassName/imageIndex.jpg
-    this.imageLocation = this.props.imageLocation;
+  shouldComponentUpdate(np, ns) {
+    // Use image location as the determining factor when a component needs to
+    // rerender since it's unique to the skill.
+    if (np.imageLocation != this.state.imageLocation) {
+      this.setState(state => ({
+        skill: np.skill,
+        // Make sure we reset current skill level back to initial state.
+        currLevel: np.skill.minLevel(),
+        imageLocation: np.imageLocation,
+      }));
+    }
+    return true;
   }
 
   imageComponent() {
     return React.createElement(
-        'img', {src: this.imageLocation});
+        'img', {src: this.state.imageLocation});
   }
 
   modifyCurrLevel(modifier) {

@@ -4,7 +4,10 @@ class Settings extends React.Component {
   constructor(props) {
     super(props);
 
-    this.currentSelectedClass = this.props.currentSelectedClass;
+    this.state = {
+      currentSelectedClass: this.props.currentSelectedClass,
+    }
+
     this.classMap = this.props.classMap;
     this.updateGameClassName = this.props.updateGameClassName;
 
@@ -29,20 +32,27 @@ class Settings extends React.Component {
           ].join(' '),
           'data-toggle': 'dropdown',
         },
-        this.classMap[this.currentSelectedClass],
+        this.classMap[this.state.currentSelectedClass],
     );
   }
 
   dropdownEntry(contents) {
+    var fn = function() {
+      this.updateGameClassName(this.classMap[contents]);
+      this.setState(state => ({
+        currentSelectedClass: contents
+      }));
+    }.bind(this);
+
     return React.createElement(
         'a',
         {
           key: contents,
           className: 'dropdown-item classname-entry',
+          onClick: fn,
         },
         contents,
     );
-
   }
 
   dropdownEntries() {

@@ -28,7 +28,15 @@ class App extends React.Component {
     const tierComps = [];
     this.data[this.state.className].forEachTier(function(skills, tier) {
       tierComps.push(
-          React.createElement(Tier, {key: tier, tier: tier, skills: skills}));
+          React.createElement(
+              Tier,
+              {
+                key: tier,
+                tier: tier,
+                skills: skills,
+                className: this.state.className,
+              },
+          ));
 
       // Add some coloumn breaks every numCols tiers.
       const numCols = 2;
@@ -41,14 +49,16 @@ class App extends React.Component {
             }
         ));
       }
-    })
+    }.bind(this))
     return React.createElement('div', {className: 'row'}, tierComps);
   }
 
   _updateGameClassName(className) {
     // TODO: Do some error handling?
     this.setState(state => ({
-      className: className,
+      // Make sure we always use lowercase as the key for classes to match
+      // this.data.
+      className: className.toLowerCase(),
     }));
   }
 

@@ -7,8 +7,7 @@ class Tier extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tier: this.props.tier,
-      skills: this.props.skills,
+      className: this.props.className,
     };
   }
 
@@ -16,7 +15,7 @@ class Tier extends React.Component {
     return React.createElement(
         'p',
         {className: 'text-center h3 text-primary'},
-        "Tier " + this.state.tier,
+        "Tier " + this.props.tier,
     )
   }
 
