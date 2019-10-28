@@ -76,7 +76,11 @@ class SkillDataSet {
 
   // The minimum level for this skill.
   minLevel() {
-    // TODO: We need to make the lvl 1 skills always have 1 by default.
+    // Just an easy approximation of "first" skill needs to be min value of 1.
+    // e.g. countdown on rifleman needs to be 1.
+    if (this.dataPerLevel[0].level == 1) {
+      return 1;
+    }
     return 0;
   }
 
