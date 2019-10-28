@@ -147,7 +147,7 @@ class Settings extends React.Component {
               id: 'level-selector',
 
             },
-            this.props.globalUsedPoints,
+            this.props.remainingPoints,
         )
     );
     return React.createElement(

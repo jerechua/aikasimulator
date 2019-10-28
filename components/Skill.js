@@ -171,14 +171,31 @@ class Skill extends React.Component {
         'img', {src: this.state.imageLocation});
   }
 
+  _setNewLevel(level) {
+    const diff = level - this.state.currLevel;
+    if (this.props.remainingPoints < diff) {
+      // We're trying to level up when there's no more remaining points
+      // available. We will only allow it if they're using the double up
+      // arrow to max out, unless there's no more points.
+      //
+      // e.g. 3 remaining points of a skill that's 0/10. We will give them
+      // the 3 remaining points instead of the 10 requested.
+      if (this.props.remainingPoints == 0) {
+        return;
+      }
+      level = this.state.currLevel + this.props.remainingPoints;
+    }
+    this.setState(state => ({
+      currLevel: level,
+    }));
+  }
+
   modifyCurrLevel(modifier) {
     var fn = function () {
       var currLevel = this.state.currLevel + modifier;
       currLevel = Math.max(this.minSkillLevel, currLevel);
       currLevel = Math.min(this.maxSkillLevel, currLevel);
-      this.setState(state => ({
-        currLevel: currLevel,
-      }));
+      this._setNewLevel(currLevel);
     };
     return fn.bind(this);
   }
@@ -195,9 +212,7 @@ class Skill extends React.Component {
 
   setCurrLevel(level) {
     var fn = function() {
-      this.setState(state => ({
-        currLevel: level,
-      }));
+      this._setNewLevel(level);
     }
     return fn.bind(this);
   }

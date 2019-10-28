@@ -27,6 +27,7 @@ class Tier extends React.Component {
                imageLocation: skill.gameClassName() + "/" + skill.id + ".jpg",
                characterLevel: this.props.characterLevel,
                updateGlobalUsedPoints: this.props.updateGlobalUsedPoints,
+               remainingPoints: this.props.remainingPoints,
           }
         ));
     }.bind(this));

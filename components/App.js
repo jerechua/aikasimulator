@@ -41,6 +41,10 @@ class App extends React.Component {
     })
   }
 
+  _remainingPoints(points) {
+    return this.state.totalPoints - this.state.globalUsedPoints;
+  }
+
   tierComponent() {
     const tierComps = [];
     this.data[this.state.className].forEachTier(function(skills, tier) {
@@ -54,6 +58,7 @@ class App extends React.Component {
                 className: this.state.className,
                 characterLevel: this.state.characterLevel,
                 updateGlobalUsedPoints: this._updateGlobalUsedPoints.bind(this),
+                remainingPoints: this._remainingPoints(),
               },
           ));
 
@@ -107,7 +112,7 @@ class App extends React.Component {
         classMap: this.fetchClasses(),
         updateGameClassName: this._updateGameClassName,
         updateCharacterLevel: this._updateCharacterLevel.bind(this),
-        globalUsedPoints: this.state.totalPoints-this.state.globalUsedPoints,
+        remainingPoints: this._remainingPoints(),
       }),
       this.tierComponent());
   }
