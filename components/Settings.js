@@ -21,61 +21,123 @@ class Settings extends React.Component {
     this.dropdownEntry = this.dropdownEntry.bind(this);
   }
 
-  dropdownButton() {
+  // TODO: Dropdown should be its own class.
+  dropdownButton(contents) {
     return React.createElement(
         'button',
         {
           className: [
               'btn',
-              'btn-secondary',
+              'btn-primary',
               'dropdown-toggle',
           ].join(' '),
           'data-toggle': 'dropdown',
-        },
-        this.classMap[this.state.currentSelectedClass],
-    );
-  }
-
-  dropdownEntry(contents) {
-    var fn = function() {
-      this.updateGameClassName(this.classMap[contents]);
-      this.setState(state => ({
-        currentSelectedClass: contents
-      }));
-    }.bind(this);
-
-    return React.createElement(
-        'a',
-        {
-          key: contents,
-          className: 'dropdown-item classname-entry',
-          onClick: fn,
         },
         contents,
     );
   }
 
-  dropdownEntries() {
-    var entries = []
-    var dropdownEntry = this.dropdownEntry.bind(this);
-    this.displayNames.forEach(function(entry) {
-      entries.push(dropdownEntry(entry));
-    })
+  dropdownEntry(contents, onClick, extraClassName) {
+    return React.createElement(
+        'a',
+        {
+          key: contents,
+          className: ['dropdown-item'].concat(extraClassName).join(' '),
+          onClick: onClick,
+        },
+        contents,
+    );
+  }
+
+  dropdownEntries(entries) {
     return React.createElement(
         'div',
-        {className: 'dropdown-menu'},
+        {className: 'dropdown-menu overflow-auto level-selector-dropdown'},
         entries,
     );
   }
 
-  render() {
+  // TODO: Game class selector should be its own component.
+  classesDropdownEntries() {
+    var entries = []
+    this.displayNames.forEach(function(entry) {
+      var onClick = function() {
+        this.updateGameClassName(this.classMap[entry]);
+        this.setState(state => ({
+          currentSelectedClass: entry
+        }));
+      }.bind(this);
+
+      entries.push(this.dropdownEntry(entry, onClick, ['classname-entry']));
+    }.bind(this))
+
+    return this.dropdownEntries(entries);
+  }
+
+  classSelectorElement() {
     return React.createElement(
         'div',
         {
           className: 'dropdown',
         },
-        this.dropdownButton(),
-        this.dropdownEntries(),
+        this.dropdownButton(this.classMap[this.state.currentSelectedClass]),
+        this.classesDropdownEntries(),
+    );
+  }
+
+  // TODO: Level selector should be its own components.
+  levelSelectorElement() {
+    const levels = [];
+    for (var i = 1; i <= 99; i++) {
+      var opts = {value: i};
+      // Set the default level to 50.
+      if (i == 50) {
+        opts.selected = 'selected';
+      }
+      levels.push(React.createElement(
+          'option',
+          opts,
+          i,
+      ));
+    }
+
+    const levelSelector = React.createElement(
+        'div',
+        {className: 'input-group-prepend'},
+        React.createElement(
+          'label',
+          {className: 'input-group-text', for:'level-selector'},
+          'Level'
+        ),
+        React.createElement(
+            'select',
+            {className: 'custom-select level-selector', id: 'level-selector'},
+            levels,
+        )
+    );
+
+    return React.createElement(
+        'div',
+        {className: 'input-group mb-3 float-left col-3'},
+        levelSelector,
+     );
+  }
+
+  render() {
+    const row = React.createElement(
+        'div',
+        {
+          className: 'row',
+        },
+        this.classSelectorElement(),
+        this.levelSelectorElement(),
+    )
+    return React.createElement(
+        'div',
+        {
+          className: 'container-fluid',
+        },
+        row,
     );
   }
 }

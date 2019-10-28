@@ -59,3 +59,7 @@
 .classname-entry {
   text-transform: capitalize;
 }
+
+.level-selector {
+  width: 70px;
+}
