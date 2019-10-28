@@ -7,6 +7,7 @@ class Settings extends React.Component {
     this.state = {
       currentSelectedClass: this.props.currentSelectedClass,
       currentSelectedLevel: this.props.currentSelectedLevel,
+      remainingPoints: this.props.remainingPoints,
     }
 
     this.classMap = this.props.classMap;
@@ -21,6 +22,15 @@ class Settings extends React.Component {
 
     this.dropdownEntry = this.dropdownEntry.bind(this);
     this.levelSelectorOnChange = this.levelSelectorOnChange.bind(this);
+  }
+
+  shouldComponentUpdate(np, ns) {
+    if (np.remainingPoints != this.state.remainingPoints) {
+      this.setState({
+        remainingPoints: np.remainingPoints,
+      });
+    }
+    return true;
   }
 
   // TODO: Dropdown should be its own class.
@@ -136,7 +146,7 @@ class Settings extends React.Component {
     const remainingPointsClass = ['input-group-text'];
     const actualPointsClass = ['form-control'];
 
-    if (this.props.remainingPoints == 0) {
+    if (this.state.remainingPoints == 0) {
       remainingPointsClass.push('bg-danger', 'text-white');
       actualPointsClass.push('font-weight-bold');
     }
@@ -155,7 +165,7 @@ class Settings extends React.Component {
               className: actualPointsClass.join(' '),
 
             },
-            this.props.remainingPoints,
+            this.state.remainingPoints,
         )
     );
     return React.createElement(

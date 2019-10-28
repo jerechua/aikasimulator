@@ -84,6 +84,7 @@ class App extends React.Component {
       // this.data.
       className: className.toLowerCase(),
       totalPoints: this._calculatePoints(this.state.characterLevel),
+      globalUsedPoints: 1,
     }));
   }
 

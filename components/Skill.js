@@ -137,12 +137,8 @@ class Skill extends React.Component {
   }
 
   shouldComponentUpdate(np, ns) {
-    if (ns.currLevel != this.state.currLevel) {
-      this.props.updateGlobalUsedPoints(ns.currLevel-this.state.currLevel);
-    }
-
-    // Use image location as the determining factor when a component needs to
-    // rerender since it's unique to the skill.
+    // Use image location as the determining factor instead of the game class
+    // name when a component needs to rerender since it's unique to the skill.
     if (np.imageLocation != this.state.imageLocation) {
       this.setState(state => ({
         skill: np.skill,
@@ -150,6 +146,9 @@ class Skill extends React.Component {
         currLevel: np.skill.minLevel(),
         imageLocation: np.imageLocation,
       }));
+      // Class updating resets everything from the parent component, so just
+      // short circuit;
+      return true;
     } else if (np.characterLevel < this.props.characterLevel) {
       // The current selected level changed, so just update the current
       // level up to max allowable setting.
@@ -161,6 +160,11 @@ class Skill extends React.Component {
       this.setState({
         currLevel: np.skill.minLevel(),
       });
+    }
+
+    // Update the parent component with changess to skills.
+    if (ns.currLevel != this.state.currLevel) {
+      this.props.updateGlobalUsedPoints(ns.currLevel-this.state.currLevel);
     }
 
     return true;
