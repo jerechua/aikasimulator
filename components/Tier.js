@@ -22,12 +22,12 @@ class Tier extends React.Component {
         entries.push(React.createElement(
           Skill,
           {
-               key: index,
-               skill: skill,
-               imageLocation: skill.gameClassName() + "/" + skill.id + ".jpg",
-               characterLevel: this.props.characterLevel,
-               updateGlobalUsedPoints: this.props.updateGlobalUsedPoints,
-               remainingPoints: this.props.remainingPoints,
+             key: index,
+             skill: skill,
+             imageLocation: skill.gameClassName().replace(/\s+/g, '') + "/" + skill.id + ".jpg",
+             characterLevel: this.props.characterLevel,
+             updateGlobalUsedPoints: this.props.updateGlobalUsedPoints,
+             remainingPoints: this.props.remainingPoints,
           }
         ));
     }.bind(this));

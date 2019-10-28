@@ -503,3 +503,5 @@ var DualGunner = {
    ]
 
 };
+
+export {DualGunner};

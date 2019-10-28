@@ -512,3 +512,5 @@ var Warlock = {
    ]
 
 };
+
+export {Warlock};

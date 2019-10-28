@@ -74,13 +74,13 @@ class Settings extends React.Component {
     var entries = []
     this.displayNames.forEach(function(entry) {
       var onClick = function() {
-        this.updateGameClassName(this.classMap[entry]);
+        this.updateGameClassName(entry);
         this.setState(state => ({
           currentSelectedClass: entry
         }));
       }.bind(this);
 
-      entries.push(this.dropdownEntry(entry, onClick, ['classname-entry']));
+      entries.push(this.dropdownEntry(this.classMap[entry], onClick, ['classname-entry']));
     }.bind(this))
 
     return this.dropdownEntries(entries);

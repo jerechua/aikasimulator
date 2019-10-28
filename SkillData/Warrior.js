@@ -517,3 +517,5 @@ var Warrior = {
    ]
 
 };
+
+export {Warrior};

@@ -2,9 +2,13 @@
 
 import {ClassSkills} from './Skill.js';
 import {Cleric} from '../SkillData/Cleric.js';
+import {DualGunner} from '../SkillData/DualGunner.js';
+import {Paladin} from '../SkillData/Paladin.js';
 import {Rifleman} from '../SkillData/Rifleman.js';
 import {Settings} from './Settings.js';
 import {Tier} from './Tier.js';
+import {Warlock} from '../SkillData/Warlock.js';
+import {Warrior} from '../SkillData/Warrior.js';
 
 // Main application component.
 class App extends React.Component {
@@ -23,7 +27,11 @@ class App extends React.Component {
 
     this.data = {
       cleric: new ClassSkills("Cleric", this.props.clericData),
+      dualgunner: new ClassSkills("Dual Gunner", this.props.dualGunnerData),
+      paladin: new ClassSkills("Paladin", this.props.paladinData),
       rifleman: new ClassSkills("Rifleman", this.props.riflemanData),
+      warlock: new ClassSkills("Warlock", this.props.warlockData),
+      warrior: new ClassSkills("Warrior", this.props.warriorData),
     };
 
     // make sure we bind this since we're calling it at a later time.
@@ -123,7 +131,11 @@ const domContainer = document.querySelector('#root');
 ReactDOM.render(
   React.createElement(App, {
     clericData: Cleric,
+    dualGunnerData: DualGunner,
+    paladinData: Paladin,
     riflemanData: Rifleman,
+    warlockData: Warlock,
+    warriorData: Warrior,
   }),
   domContainer
  );

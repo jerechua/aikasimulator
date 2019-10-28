@@ -515,3 +515,5 @@ var Paladin = {
    ]
 
 };
+
+export {Paladin};
