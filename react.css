@@ -78,3 +78,8 @@ option {
   text-align: left;
   /* reset to left*/
 }
+
+.skill-icon {
+  width: 45px;
+  height: 45px;
+}

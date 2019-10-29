@@ -172,7 +172,12 @@ class Skill extends React.Component {
 
   imageComponent() {
     return React.createElement(
-        'img', {src: this.state.imageLocation});
+        'img',
+        {
+          src: this.state.imageLocation,
+          className: 'skill-icon',
+        }
+    );
   }
 
   _setNewLevel(level) {
