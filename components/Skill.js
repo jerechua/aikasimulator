@@ -98,7 +98,7 @@ class SkillDataSet {
   // level.
   maxPointsForLevel(level) {
     for (var i = this.dataPerLevel.length - 1; i >= 0; i--) {
-      if (level > this.dataPerLevel[i].level) {
+      if (level >= this.dataPerLevel[i].level) {
         return i + 1;
       }
     }
