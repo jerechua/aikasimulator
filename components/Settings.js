@@ -90,7 +90,7 @@ class Settings extends React.Component {
     return React.createElement(
         'div',
         {
-          className: 'dropdown',
+          className: 'dropdown setting-entry',
         },
         this.dropdownButton(this.classMap[this.state.currentSelectedClass]),
         this.classesDropdownEntries(),
@@ -136,7 +136,7 @@ class Settings extends React.Component {
 
     return React.createElement(
         'div',
-        {className: 'input-group mb-3 float-left col-2'},
+        {className: 'input-group setting-entry'},
         levelSelector,
      );
   }
@@ -170,7 +170,7 @@ class Settings extends React.Component {
     );
     return React.createElement(
         'div',
-        {className: 'input-group mb-3 float-left col-2'},
+        {className: 'input-group setting-entry'},
         label,
     )
   }

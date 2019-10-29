@@ -1,6 +1,7 @@
 .main-container {
   width:  960px;
   min-width: 960px;
+  padding: 10px 0 0 0;
 }
 
 .tier {
@@ -82,4 +83,13 @@ option {
 .skill-icon {
   width: 45px;
   height: 45px;
+}
+
+.skill {
+  margin-bottom: 1px;
+}
+
+.setting-entry {
+  margin: 0 12px 5px 0;
+  width: auto;
 }
